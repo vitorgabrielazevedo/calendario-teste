@@ -42,21 +42,21 @@ const months = [
 ];
 
 const eventsArr = [
-  {
-    day: 16,
-    month: 12,
-    year: 2024,
-    events: [
-      {
-        title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-        time: "10:00 AM",
-      },
-      {
-        title: "Event 2",
-        time: "11:00 AM",
-      },
-    ],
-  },
+  // {
+  //   day: 16,
+  //   month: 12,
+  //   year: 2024,
+  //   events: [
+  //     {
+  //       title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
+  //       time: "10:00 AM",
+  //     },
+  //     {
+  //       title: "Event 2",
+  //       time: "11:00 AM",
+  //     },
+  //   ],
+  // },
 ];
 
 // Função que inicializa o calendário
@@ -266,9 +266,43 @@ function updateEvents(date) {
             const eventElement = e.target.closest(".event");
             const eventTitle = eventElement.querySelector(".event-title").textContent;
             const eventTime = eventElement.querySelector(".event-time").textContent;
-            editEvent(eventTitle, eventTime, activeDay, month + 1, year);
-        })
-    })
+
+            // Extrai os valores do evento atual
+            const timeRange = eventTime.split(" - ");
+            const fromTime = timeRange[0].replace(/AM|PM/, "").trim();
+            const toTime = timeRange[1].replace(/AM|PM/, "").trim();
+
+            // Obtém os novos valores do usuário
+            const newTitle = prompt("Edite o título do evento:", eventTitle) || eventTitle;
+            const newFromTime = prompt("Edite o horário de início (HH:MM):", fromTime) || fromTime;
+            const newToTime = prompt("Edite o horário de término (HH:MM):", toTime) || toTime;
+
+            // Validação dos horários
+            if (
+                !newFromTime.match(/^\d{1,2}:\d{2}$/) ||
+                !newToTime.match(/^\d{1,2}:\d{2}$/)
+            ) {
+                alert("Formato de hora inválido. Use o formato HH:MM.");
+                return;
+            }
+
+            const newTime = `${convertTime(newFromTime)} - ${convertTime(newToTime)}`;
+
+            // Atualiza o evento no array
+            eventsArr.forEach((eventObj) => {
+                if (eventObj.day === activeDay && eventObj.month === month + 1 && eventObj.year === year) {
+                    eventObj.events = eventObj.events.map((event) =>
+                        event.title === eventTitle && event.time === eventTime
+                            ? { title: newTitle, time: newTime }
+                            : event
+                    );
+                }
+            });
+
+            // Atualiza a interface
+            updateEvents(activeDay);
+        });
+    });
 }
 
 function convertTime(time) {
