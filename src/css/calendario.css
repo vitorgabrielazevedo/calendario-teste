@@ -279,6 +279,15 @@ body {
     border-radius: 0;
 }
 
+.calendar > .goto-today > .input-group > .goto-btn {
+    padding: 5px 10px;
+    border: 1px solid var(--primary-clr);
+    border-radius: 5px;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--primary-clr);
+}
+
 .container > .right {
     position: relative;
     width: 40%;
@@ -568,6 +577,7 @@ body {
     }
 
     .container > .right {
+        position: relative;
         width: 100%;
         height: 100%;
         padding: 20px 0;
@@ -601,7 +611,7 @@ body {
     }
 
     .add-event-wrapper {
-        bottom: 100px;
+        bottom: -640px;
     }
 }
 
@@ -611,11 +621,55 @@ body {
     }
 
     .calendar > .days > .day {
-        font: 14px;
+        font-size: 14px;
     }
 
     .calendar > .days > .today {
         width: 30px;
         font-size: 21px;
+    }
+
+    .add-event-wrapper {
+        bottom: -360px;
+    }
+}
+
+@media (max-width: 425px) {
+    .right > .today-date > .event-day {
+        font-size: 1.7rem;
+    }
+
+    .right > .today-date > .event-date {
+        font-size: 0.8rem;
+    }
+
+    .add-event-wrapper {
+        bottom: 100px;
+    }
+}
+
+@media (max-width: 375px) {
+    .calendar > .days > .day {
+        font-size: 13px;
+    }
+
+    .calendar > .days > .today {
+        font-size: 19px;
+        width: 40px;
+    }
+
+    .add-event {
+        bottom: 8px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .events > .event {
+        padding-left: 10px;
+    }
+
+    .calendar > .days > .today {
+        width: 30px;
     }
 }
